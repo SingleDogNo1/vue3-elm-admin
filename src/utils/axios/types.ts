@@ -39,8 +39,8 @@ export interface UploadFileParams {
 }
 
 export enum ResultEnum {
-  SUCCESS = 0,
-  ERROR = 1,
+  SUCCESS = 20000,
+  ERROR = 50000,
   TIMEOUT = 401,
   TYPE = 'success',
 }

@@ -1,33 +1,28 @@
 <template>
-  <div class="about">
-    <div>{{ t('login.password') }}</div>
-    <!-- <div>{{ locale }}</div> -->
+  <div class="redirect">
+    {{ msg }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
-import { useI18n } from '@/hooks/useI18n'
 
 export default defineComponent({
-  name: 'About',
+  name: 'Redirect',
   setup() {
     const state = reactive({
-      msg: 'hello, about',
+      msg: 'hello, redirect',
     })
-
-    const { t } = useI18n()
 
     return {
       ...toRefs(state),
-      t,
     }
   },
 })
 </script>
 
 <style scoped lang="scss">
-.about {
+.redirect {
   color: red;
 }
 </style>

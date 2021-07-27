@@ -1,4 +1,7 @@
 export default interface UserState {
-  token?: string
-  name?: string
+  token: string | null
+  name: string
+  roles: string[]
+  introduction: string
+  avatar: string
 }
