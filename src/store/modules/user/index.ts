@@ -43,15 +43,12 @@ const userModule: Module<UserState, RootState> = {
     },
     getInfo({ commit, state }) {
       return new Promise((resolve) => {
-        getUserInfoApi(state.token).then((data) => {
-          console.log('data :>> ', data)
-          const { roles, name, avatar, introduction } = data
-
+        getUserInfoApi(state.token as string).then(({ roles, name, avatar, introduction }) => {
           commit('SET_ROLES', roles)
           commit('SET_NAME', name)
           commit('SET_AVATAR', avatar)
           commit('SET_INTRODUCTION', introduction)
-          resolve(data)
+          resolve(roles)
         })
       })
     },
@@ -64,6 +61,16 @@ const userModule: Module<UserState, RootState> = {
           // @ts-ignore
           resolve()
         })
+      })
+    },
+    // remove token
+    resetToken({ commit }) {
+      return new Promise((resolve) => {
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        removeToken()
+        // @ts-ignore
+        resolve()
       })
     },
   },

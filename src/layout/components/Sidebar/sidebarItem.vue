@@ -1,25 +1,21 @@
 <template>
-  <div v-if="hiddenMenu(item)">
-    <template
+  <template v-if="hiddenMenu(item)">
+    <el-menu-item
       v-if="
         hasOneShowingChild(item.children, item) &&
         (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
         !item.alawysShow
       "
+      :index="resolvePath(onlyOneChild.path)"
     >
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)">
-          <link-item
-            :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-            :title="onlyOneChild.meta.title"
-          />
-        </el-menu-item>
-      </app-link>
-    </template>
+      <i v-if="onlyOneChild.meta.icon" :class="'el-icon-' + onlyOneChild.meta.icon"></i>
+      <template #title>{{ onlyOneChild.meta.title }}</template>
+    </el-menu-item>
 
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+    <el-submenu v-else :index="resolvePath(item.path)">
       <template #title>
-        <link-item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+        <i v-if="item.meta.icon" :class="'el-icon-' + item.meta.icon"></i>
+        <span>{{ item.meta.title }}</span>
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -30,14 +26,12 @@
         class="nest-menu"
       />
     </el-submenu>
-  </div>
+  </template>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
-import AppLink from './link.vue'
-import LinkItem from './item.vue'
 import { isUrl } from '@/utils/is'
 import path from 'path-browserify'
 
@@ -47,10 +41,7 @@ interface State {
 
 export default defineComponent({
   name: 'SidebarItem',
-  components: {
-    AppLink,
-    LinkItem,
-  },
+  components: {},
   props: {
     item: {
       type: Object,

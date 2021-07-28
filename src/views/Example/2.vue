@@ -1,7 +1,5 @@
 <template>
-  <div>
-    {{ msg }}
-  </div>
+  <div v-html="msg"></div>
 </template>
 
 <script lang="ts">
@@ -11,7 +9,7 @@ export default defineComponent({
   name: '',
   setup() {
     const state = reactive({
-      msg: 'hello, example 2',
+      msg: 'hello, example<br />2',
     })
 
     return {

@@ -4,33 +4,32 @@
 import type { AxiosResponse } from 'axios'
 import { RequestOptions, Result, ResultEnum, ContentTypeEnum } from './types'
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform'
-
 import { VAxios } from './Axios'
 import { checkStatus } from './checkStatus'
-
 import { useGlobSetting } from '@/hooks/useGlobSettings'
-
 import { isString } from '@/utils/is'
-
 import { setObjToUrlParams, deepMerge } from '@/utils'
 import { errorResult } from './const'
 import { createNow, formatRequestDate } from './helper'
+import { getToken } from '../auth'
+import { ElLoading, ElMessageBox, ElMessage } from 'element-plus'
 
 const globSetting = useGlobSetting()
 const prefix = globSetting.urlPrefix
 
 let needLoadingRequestCount = 0
+let loadingInstance
 
 function showLoading() {
   if (needLoadingRequestCount === 0) {
-    console.log('开始加载。。。。。')
+    loadingInstance = ElLoading.service()
   }
   needLoadingRequestCount++
 }
 
 const tryCloseLoading = () => {
   if (needLoadingRequestCount === 0) {
-    console.log('加载结束。。。。。')
+    loadingInstance.close()
   }
 }
 
@@ -64,8 +63,8 @@ const transform: AxiosTransform = {
     const result = res.data
     if (!result) return errorResult
 
-    console.log('result :>> ', result)
     //  TODO 这里 code，data，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    console.log('result :>> ', result)
     const { code, data, message } = result
 
     // 这里逻辑可以根据项目进行修改
@@ -74,7 +73,10 @@ const transform: AxiosTransform = {
       if (message) {
         // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
         if (options.errorMessageMode === 'modal') {
-          alert('错误提示: >> ' + message)
+          ElMessageBox.alert(message, '请求错误', {
+            confirmButtonText: '确定',
+            center: true,
+          })
         } else if (options.errorMessageMode === 'message') {
           console.log(message)
         }
@@ -100,7 +102,9 @@ const transform: AxiosTransform = {
     }
     // 登录超时
     if (code === ResultEnum.TIMEOUT) {
-      alert('操作失败: >> 登录超时,请重新登录!')
+      ElMessage({
+        message: '登录超时,请重新登录!',
+      })
       Promise.reject(new Error('登录超时,请重新登录!'))
       return errorResult
     }
@@ -150,7 +154,12 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config) => {
     // 请求之前处理config
-    config.headers.Authorization = 'Test_Authorization'
+    const token = getToken()
+    if (token) {
+      config.headers.Authorization = token
+    } else {
+      config.headers.Authorization = ''
+    }
 
     if (config.loading) {
       showLoading()
@@ -172,10 +181,14 @@ const transform: AxiosTransform = {
     const err: string = error?.toString?.() ?? ''
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-        console.error('接口请求超时,请刷新页面重试!')
+        ElMessage({
+          message: '接口请求超时,请刷新页面重试!',
+        })
       }
       if (err?.includes('Network Error')) {
-        alert('网络异常, 请检查您的网络连接是否正常')
+        ElMessage({
+          message: '网络异常, 请检查您的网络连接是否正常',
+        })
       }
     } catch (error) {
       throw new Error(error)
@@ -190,14 +203,12 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     deepMerge(
       {
         timeout: 10 * 1000,
-        loading: true,
+        loading: false,
         // 基础接口地址
         baseURL: globSetting.apiUrl,
         // 接口可能会有通用的地址部分，可以统一抽取出来
         prefixUrl: prefix,
         headers: { 'Content-Type': ContentTypeEnum.JSON },
-        // 如果是form-data格式
-        // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式
         transform,
         // 配置项，下面的选项都可以在独立的接口请求中覆盖

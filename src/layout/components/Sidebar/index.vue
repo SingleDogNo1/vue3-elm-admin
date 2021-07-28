@@ -8,13 +8,7 @@
     </el-button>
 
     <el-scrollbar>
-      <el-menu
-        default-active="1-4-1"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
-        :collapse="isCollapse"
-      >
+      <el-menu default-active="1-4-1" class="side-menu" :collapse="isCollapse" router>
         <sidebar-item
           v-for="route in permissionRoutes"
           :key="route.path"
@@ -48,26 +42,17 @@ export default defineComponent({
       state.isCollapse = !state.isCollapse
     }
 
-    function handleOpen(key, keyPath) {
-      console.log(key, keyPath)
-    }
-    function handleClose(key, keyPath) {
-      console.log(key, keyPath)
-    }
-
     return {
       ...toRefs(state),
       permissionRoutes,
       toggleCollapse,
-      handleOpen,
-      handleClose,
     }
   },
 })
 </script>
 
 <style scoped lang="scss">
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+.side-menu:not(.el-menu--collapse) {
   width: 210px;
 }
 

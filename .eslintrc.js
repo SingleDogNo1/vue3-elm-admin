@@ -51,7 +51,6 @@ module.exports = defineConfig({
       },
     ],
     'space-before-function-paren': 'off',
-
     'vue/attributes-order': 'off',
     'vue/one-component-per-file': 'off',
     'vue/html-closing-bracket-newline': 'off',
@@ -72,5 +71,7 @@ module.exports = defineConfig({
         math: 'always',
       },
     ],
+    'vue/no-v-html': 'off',
+    'vue/valid-v-slot': 'off',
   },
 })

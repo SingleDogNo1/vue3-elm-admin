@@ -19,7 +19,7 @@ router.beforeEach(async (to) => {
         return true
       } else {
         try {
-          const { roles } = await store.dispatch('user/getInfo')
+          const roles = await store.dispatch('user/getInfo')
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
           accessRoutes.map((route) => {
             router.addRoute(route)
@@ -27,6 +27,7 @@ router.beforeEach(async (to) => {
 
           return { ...to, replace: true }
         } catch (error) {
+          console.log('error :>> ', error)
           await store.dispatch('user/resetToken')
           ElMessage.error(error || 'Has Error')
           return { path: `/login?redirect=${to.path}` }
