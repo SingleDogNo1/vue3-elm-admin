@@ -23,7 +23,7 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from 'vue'
 import { useStore } from '@/store'
-import SidebarItem from './sidebarItem.vue'
+import SidebarItem from './item.vue'
 
 export default defineComponent({
   name: 'Sidebar',

@@ -5,7 +5,7 @@ import LocaleState from './types'
 const LocaleModule: Module<LocaleState, RootState> = {
   namespaced: true,
   state: {
-    locale: 'en',
+    locale: 'zh_CN',
   },
   mutations: {
     SET_LOCALE: (state, locale) => {

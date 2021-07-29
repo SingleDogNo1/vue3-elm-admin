@@ -6,7 +6,6 @@ import { getToken } from './utils/auth'
 const whiteList = ['/login', '/auth-redirect']
 
 router.beforeEach(async (to) => {
-  // determine whether the user has logged in
   const hasToken = getToken()
 
   if (hasToken) {
@@ -35,7 +34,7 @@ router.beforeEach(async (to) => {
       }
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
+    if (whiteList.includes(to.path)) {
       return true
     } else {
       return { path: `/login?redirect=${to.path}` }

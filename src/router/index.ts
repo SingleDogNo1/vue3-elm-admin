@@ -1,9 +1,12 @@
 import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
-import { useRouter as baseUseRouter, useRoute as baseUseRoute } from 'vue-router'
+import {
+  createRouter,
+  createWebHashHistory,
+  useRouter as baseUseRouter,
+  useRoute as baseUseRoute,
+} from 'vue-router'
 import Layout from '@/layout/index.vue'
-
-import { createRouter, createWebHashHistory } from 'vue-router'
 
 export const constantRoutes: RouteRecordRaw[] = [
   {
@@ -33,7 +36,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/Home/index.vue'),
         name: 'Dashboard',
         meta: {
-          title: 'Dashboard',
+          title: 'router.dashboard',
           icon: 'menu',
           affix: true,
         },
@@ -55,7 +58,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/example',
     name: 'Example',
     meta: {
-      title: 'Nested Pages',
+      title: 'router.nestedPages',
       icon: 'error',
     },
     component: Layout,
@@ -65,7 +68,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'ExampleA',
         component: () => import('@/views/Example/1.vue'),
         meta: {
-          title: 'ExampleA',
+          title: 'router.nestedPageA',
           icon: 'basketball',
         },
       },
@@ -74,7 +77,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'ExampleB',
         component: () => import('@/views/Example/2.vue'),
         meta: {
-          title: 'ExampleB',
+          title: 'router.nestedPageB',
           icon: 'basketball',
         },
       },
