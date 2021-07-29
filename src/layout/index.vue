@@ -1,7 +1,7 @@
 <template>
   <sidebar />
   <div class="main-container">
-    <div>
+    <div class="is-fixed">
       <navbar />
       <tags-view />
     </div>

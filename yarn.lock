@@ -5775,7 +5775,7 @@ path-parse@^1.0.6:
 
 path-to-regexp@^6.2.0:
   version "6.2.0"
-  resolved "https://registry.npm.taobao.org/path-to-regexp/download/path-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
+  resolved "https://registry.npm.taobao.org/path-to-regexp/download/path-to-regexp-6.2.0.tgz?cache=0&sync_timestamp=1601400328354&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpath-to-regexp%2Fdownload%2Fpath-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
   integrity sha1-97OAMzYQTDRoia3s5hRmkjBkXzg=
 
 path-type@^4.0.0:

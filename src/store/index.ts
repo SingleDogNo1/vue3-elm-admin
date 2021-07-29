@@ -6,6 +6,7 @@ import getters from './getters'
 import user from './modules/user'
 import locale from './modules/locale'
 import permission from './modules/permission'
+import app from './modules/app'
 
 export const store = createStore<AllState>({
   plugins: [
@@ -18,6 +19,7 @@ export const store = createStore<AllState>({
     user,
     locale,
     permission,
+    app,
   },
 })
 

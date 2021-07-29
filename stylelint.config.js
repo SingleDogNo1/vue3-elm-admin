@@ -18,7 +18,7 @@ module.exports = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin', 'tailwind'],
+        ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin', 'tailwind', 'apply'],
       },
     ],
     'no-empty-source': null,
