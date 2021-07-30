@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3.5 h-full cursor-pointer" @click="toggleClick">
+  <div class="px-3.5 h-full cursor-pointer" @click="handleToggleClick">
     <i v-if="isActive" class="text-xl text-gray-800 el-icon-s-fold"></i>
     <i v-else class="text-xl text-gray-800 el-icon-s-unfold"></i>
   </div>
@@ -15,13 +15,13 @@ export default {
     },
   },
   emits: ['toggleClick'],
-  setup(_props, ctx) {
-    function toggleClick() {
-      ctx.emit('toggleClick')
+  setup(_props, { emit }) {
+    function handleToggleClick() {
+      emit('toggleClick')
     }
 
     return {
-      toggleClick,
+      handleToggleClick,
     }
   },
 }

@@ -9,7 +9,7 @@
       :index="resolvePath(onlyOneChild.path)"
     >
       <i v-if="onlyOneChild.meta.icon" :class="'el-icon-' + onlyOneChild.meta.icon"></i>
-      <template #title>{{ t(onlyOneChild.meta.title) }}</template>
+      <template #title>{{ t(onlyOneChild?.meta?.title) }}</template>
     </el-menu-item>
 
     <el-submenu v-else :index="resolvePath(item.path)">
