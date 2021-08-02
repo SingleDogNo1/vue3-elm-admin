@@ -1,32 +1,31 @@
 <template>
   <div class="navbar h-12 overflow-hidden">
-    <hamburger
-      :is-active="sidebar.opened"
-      class="hamburger-wrapper leading-12"
-      @click="toggleSideBar"
-    />
+    <hamburger :is-active="sidebar.opened" class="leading-12 hover-effect" @click="toggleSideBar" />
 
     <breadcrumb />
 
-    <div class="right-menu">
-      <error-log />
-      <screen-full />
+    <div class="h-full flex">
+      <screen-full class="h-full px-2 leading-12 hover-effect" />
+
+      <lang-select class="h-full leading-12 text-base hover-effect" />
+      <account />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from 'vue'
-import { Breadcrumb, ErrorLog, Hamburger, ScreenFull } from './components'
+import { Breadcrumb, Hamburger, ScreenFull, LangSelect, Account } from './components'
 import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'Navbar',
   components: {
     Breadcrumb,
-    ErrorLog,
     Hamburger,
     ScreenFull,
+    LangSelect,
+    Account,
   },
   setup() {
     const store = useStore()
@@ -51,6 +50,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.hover-effect {
+  @apply hover:bg-black;
+  @apply hover:bg-opacity-5;
+}
+
 .navbar {
   position: relative;
   display: flex;

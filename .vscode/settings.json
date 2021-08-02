@@ -7,6 +7,7 @@
     "commitlint",
     "mockjs",
     "persistedstate",
+    "screenfull",
     "stylelint",
     "submenu",
     "tailwindcss",
@@ -26,5 +27,6 @@
   ],
   "i18n-ally.localesPaths": [
     "src/locales/lang"
-  ]
+  ],
+  "css.lint.unknownAtRules": "ignore"
 }

@@ -1,4 +1,5 @@
 export { default as Breadcrumb } from './breadcrumb.vue'
-export { default as ErrorLog } from './errorLog.vue'
 export { default as Hamburger } from './hamburger.vue'
 export { default as ScreenFull } from './screenFull.vue'
+export { default as LangSelect } from './LangSelect.vue'
+export { default as Account } from './account.vue'
