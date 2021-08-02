@@ -83,6 +83,23 @@ export const asyncRoutes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/icon',
+    component: Layout,
+    redirect: '/icon/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Icons/index.vue'),
+        name: 'Icons',
+        meta: {
+          icon: 'icon',
+          title: 'router.icon',
+          noCache: true,
+        },
+      },
+    ],
+  },
 ]
 
 export const router = createRouter({

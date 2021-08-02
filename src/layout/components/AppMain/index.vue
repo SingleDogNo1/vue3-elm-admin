@@ -20,9 +20,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped lang="scss">
-.app-main {
-  color: rgb(255, 0, 119);
-}
-</style>
