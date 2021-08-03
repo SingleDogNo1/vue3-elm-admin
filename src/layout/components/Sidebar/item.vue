@@ -8,14 +8,32 @@
       "
       :index="resolvePath(onlyOneChild.path)"
     >
-      <i v-if="onlyOneChild.meta.icon" :class="'el-icon-' + onlyOneChild.meta.icon"></i>
-      <template #title>{{ t(onlyOneChild?.meta?.title) }}</template>
+      <i
+        v-if="onlyOneChild.meta.icon && onlyOneChild.meta.icon.startsWith('el-icon')"
+        :class="onlyOneChild.meta.icon"
+      ></i>
+      <svg-icon
+        v-if="onlyOneChild.meta.icon && !onlyOneChild.meta.icon.startsWith('el-icon')"
+        class="text-sm mr-4"
+        :name="onlyOneChild.meta.icon"
+      />
+      <template #title>
+        <span class="leading-none">{{ t(onlyOneChild?.meta?.title) }}</span>
+      </template>
     </el-menu-item>
 
     <el-submenu v-else :index="resolvePath(item.path)">
       <template #title>
-        <i v-if="item.meta.icon" :class="'el-icon-' + item.meta.icon"></i>
-        <span>{{ t(item.meta.title) }}</span>
+        <i
+          v-if="item.meta.icon && item.meta.icon.startsWith('el-icon')"
+          :class="'el-icon-' + item.meta.icon"
+        ></i>
+        <svg-icon
+          v-if="item.meta.icon && !item.meta.icon.startsWith('el-icon')"
+          class="text-sm mr-4"
+          :name="item.meta.icon"
+        />
+        <span class="leading-none">{{ t(item.meta.title) }}</span>
       </template>
       <sidebar-item
         v-for="child in item.children"

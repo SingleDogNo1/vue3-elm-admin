@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+  <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="hover">
     <div class="avatar-wrapper">
       <img :src="avatar" class="w-12 h-12" />
     </div>

@@ -37,7 +37,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: 'Dashboard',
         meta: {
           title: 'router.dashboard',
-          icon: 'menu',
+          icon: 'dashboard',
           affix: true,
         },
       },
@@ -59,7 +59,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     name: 'Example',
     meta: {
       title: 'router.nestedPages',
-      icon: 'error',
+      icon: 'nested',
     },
     component: Layout,
     children: [
@@ -69,7 +69,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/Example/1.vue'),
         meta: {
           title: 'router.nestedPageA',
-          icon: 'basketball',
+          icon: 'el-icon-eleme',
         },
       },
       {
@@ -78,7 +78,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/Example/2.vue'),
         meta: {
           title: 'router.nestedPageB',
-          icon: 'basketball',
+          icon: 'el-icon-eleme',
         },
       },
     ],
