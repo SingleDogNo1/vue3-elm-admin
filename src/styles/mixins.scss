@@ -11,3 +11,25 @@
   width: $size;
   height: $size;
 }
+
+// 圆角宏
+// 只传入一个参数，生成正圆
+// 传入两个参数，生成固定圆角大小的正方形
+// 传入三个参数，生成固定圆角大小的长方形
+@mixin circle($options) {
+  @if length($options) == 1 {
+    @include square($options);
+
+    border-radius: $options * 0.5;
+  }
+  @if length($options) == 2 {
+    @include square(nth($options, 1));
+
+    border-radius: nth($options, 2);
+  }
+  @if length($options) == 3 {
+    @include cube(nth($options, 1), nth($options, 2));
+
+    border-radius: nth($options, 3);
+  }
+}

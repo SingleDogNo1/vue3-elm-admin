@@ -1,8 +1,13 @@
-$--color-primary: rgba(21, 134, 179, 0.9);
+$--color-primary: #bf4080;
 $--color-danger: rgb(211, 16, 65);
 $--color-warning: hsla(200, 20%, 20%, 20%);
+$--color-success: #42b983;
 
 /**
  ************ Font **************/
 $--font-color-primary: #1f2937; // tailwind:text-gray-800
 $--font-color-disabled: #9ca3af; // tailwind:text-gray-400
+
+/**
+ ************ Border **************/
+$--border-color-default: #d8dce5;

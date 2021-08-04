@@ -36,5 +36,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .main-container {
   flex: 1;
+  position: relative;
 }
 </style>

@@ -7,6 +7,7 @@ import user from './modules/user'
 import locale from './modules/locale'
 import permission from './modules/permission'
 import app from './modules/app'
+import tagsView from './modules/tagsView'
 
 export const store = createStore<AllState>({
   plugins: [
@@ -20,6 +21,7 @@ export const store = createStore<AllState>({
     locale,
     permission,
     app,
+    tagsView,
   },
 })
 

@@ -6,7 +6,7 @@ module.exports = {
     'selector-pseudo-class-no-unknown': [
       true,
       {
-        ignorePseudoClasses: ['global', 'export'],
+        ignorePseudoClasses: ['global', 'export', 'v-deep'],
       },
     ],
     'selector-pseudo-element-no-unknown': [

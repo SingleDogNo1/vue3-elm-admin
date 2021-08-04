@@ -15,6 +15,7 @@
       <svg-icon
         v-if="onlyOneChild.meta.icon && !onlyOneChild.meta.icon.startsWith('el-icon')"
         class="text-sm mr-4"
+        color="currentColor"
         :name="onlyOneChild.meta.icon"
       />
       <template #title>
@@ -31,6 +32,7 @@
         <svg-icon
           v-if="item.meta.icon && !item.meta.icon.startsWith('el-icon')"
           class="text-sm mr-4"
+          color="currentColor"
           :name="item.meta.icon"
         />
         <span class="leading-none">{{ t(item.meta.title) }}</span>
