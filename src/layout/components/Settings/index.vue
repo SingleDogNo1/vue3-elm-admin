@@ -1,21 +1,58 @@
 <template>
-  <div class="settings">
-    {{ msg }}
+  <div class="drawer-container">
+    <h3 class="drawer-title">Page style setting</h3>
+
+    <div class="drawer-item">
+      <span>Theme Color</span>
+      <!-- <theme-picker
+        style="float: right; height: 26px; margin: -3px 8px 0 0"
+        @change="themeChange"
+      /> -->
+    </div>
+
+    <div class="drawer-item">
+      <span>Open Tags-View</span>
+      <el-switch v-model="tagsView" class="drawer-switch" />
+    </div>
+
+    <div class="drawer-item">
+      <span>Fixed Header</span>
+      <el-switch v-model="fixedHeader" class="drawer-switch" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useStore } from '@/store/'
 
 export default defineComponent({
   name: 'Settings',
   setup() {
-    const state = reactive({
-      msg: 'hello, settings',
+    const store = useStore()
+
+    const fixedHeader = computed({
+      get: () => store.state.settings.fixedHeader,
+      set: (value) => {
+        store.dispatch('settings/changeSetting', {
+          key: 'fixedHeader',
+          value,
+        })
+      },
     })
 
+    const tagsView = computed({
+      get: () => store.state.settings.tagsView,
+      set: (value) => {
+        store.dispatch('settings/changeSetting', {
+          key: 'tagsView',
+          value,
+        })
+      },
+    })
     return {
-      ...toRefs(state),
+      fixedHeader,
+      tagsView,
     }
   },
 })
@@ -24,5 +61,31 @@ export default defineComponent({
 <style scoped lang="scss">
 .settings {
   color: #1643a5;
+}
+</style>
+
+<style lang="scss" scoped>
+.drawer-container {
+  padding: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+
+  .drawer-title {
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .drawer-item {
+    padding: 12px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  .drawer-switch {
+    float: right;
+  }
 }
 </style>

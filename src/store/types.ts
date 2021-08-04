@@ -3,6 +3,7 @@ import LocaleModule from './modules/locale/types'
 import PermissionState from './modules/permission/types'
 import { AppState } from './modules/app/types'
 import TagsViewState from './modules/tagsView/types'
+import SettingsState from './modules/settings/types'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export default interface RootState {}
@@ -24,4 +25,8 @@ export interface AllState extends RootState {
 
 export interface AllState extends RootState {
   tagsView: TagsViewState
+}
+
+export interface AllState extends RootState {
+  settings: SettingsState
 }

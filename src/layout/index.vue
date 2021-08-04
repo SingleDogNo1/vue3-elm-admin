@@ -6,12 +6,15 @@
       <tags-view />
     </div>
     <app-main />
+    <right-panel>
+      <settings />
+    </right-panel>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
-import { Sidebar, Navbar, TagsView, AppMain } from './components'
+import { Sidebar, Navbar, TagsView, AppMain, RightPanel, Settings } from './components'
 
 export default defineComponent({
   name: 'AppWrapper',
@@ -20,6 +23,8 @@ export default defineComponent({
     Navbar,
     TagsView,
     AppMain,
+    RightPanel,
+    Settings,
   },
   setup() {
     const state = reactive({
