@@ -1,20 +1,21 @@
 <template>
   <sidebar />
-  <div class="main-container">
-    <div class="is-fixed">
+  <div :class="['main-container', { 'fixed-container': fixedHeader }]">
+    <div :class="{ 'fixed-header': fixedHeader }">
       <navbar />
-      <tags-view />
+      <tags-view v-if="needTagsView" />
     </div>
-    <app-main />
-    <right-panel>
+    <app-main :class="{ 'fixed-content': fixedHeader, 'has-tags': needTagsView }" />
+    <right-panel v-if="showSettings">
       <settings />
     </right-panel>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { Sidebar, Navbar, TagsView, AppMain, RightPanel, Settings } from './components'
+import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'AppWrapper',
@@ -27,12 +28,16 @@ export default defineComponent({
     Settings,
   },
   setup() {
-    const state = reactive({
-      msg: 'hello, app-wrapper',
-    })
+    const store = useStore()
+
+    const fixedHeader = computed(() => store.state.settings.fixedHeader)
+    const showSettings = computed(() => store.state.settings.showSettings)
+    const needTagsView = computed(() => store.state.settings.tagsView)
 
     return {
-      ...toRefs(state),
+      fixedHeader,
+      showSettings,
+      needTagsView,
     }
   },
 })
@@ -42,5 +47,30 @@ export default defineComponent({
 .main-container {
   flex: 1;
   position: relative;
+  overflow: hidden auto;
+
+  &.fixed-container {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .fixed-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: 100%;
+    transition: width 0.28s;
+  }
+
+  .fixed-content {
+    height: 100%;
+    padding-top: 48px;
+    overflow: hidden auto;
+
+    &.has-tags {
+      padding-top: 82px;
+    }
+  }
 }
 </style>

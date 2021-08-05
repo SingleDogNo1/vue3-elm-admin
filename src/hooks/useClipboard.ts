@@ -16,8 +16,8 @@ function clipboardError() {
   })
 }
 
-export function useClipboard(text, event) {
-  const clipboard = new Clipboard(event.target, {
+export function useClipboard(text: string, event) {
+  const clipboard = new Clipboard(event.target!, {
     text: () => text,
   })
   clipboard.on('success', () => {
@@ -28,4 +28,5 @@ export function useClipboard(text, event) {
     clipboardError()
     clipboard.destroy()
   })
+  ;(clipboard as any).onClick(event)
 }

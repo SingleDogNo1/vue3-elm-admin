@@ -5,10 +5,9 @@ import { isObject } from '@/utils/is'
  * @param baseUrl url
  * @param obj
  * @returns {string}
- * eg:
+ * @example
  *  let obj = {a: '3', b: '4'}
- *  setObjToUrlParams('www.baidu.com', obj)
- *  ==>www.baidu.com?a=3&b=4
+ *  setObjToUrlParams('www.baidu.com', obj) ==> www.baidu.com?a=3&b=4
  */
 export function setObjToUrlParams(baseUrl: string, obj: any): string {
   let parameters = ''
@@ -40,9 +39,8 @@ export function typeOf(val: any): string {
  * 解析 url 参数,转化为对象
  * @param url {string} url地址
  * @returns 包含参数 key-value 的对象,如果有 key,没有定义 value,赋值为 true
- * eg:
- *  parseParam('www.xxx.com/?name=%E5%BC%A0%E4%B8%89&sex=0&addr')
- *  => { name: '张三', sex: 0, addr: true }
+ * @example
+ *  parseParam('www.xxx.com/?name=%E5%BC%A0%E4%B8%89&sex=0&addr') => { name: '张三', sex: 0, addr: true }
  */
 export function parseParam(url: string) {
   const paramsStr = /.+\?(.+)$/.exec(url)?.[1]
@@ -51,8 +49,8 @@ export function parseParam(url: string) {
   // 将 params 存到对象中
   paramsArr?.forEach((param) => {
     if (/=/.test(param)) {
-      // eslint-disable-next-line prefer-const
-      let [key, val] = param.split('=')
+      const key = param.split('=')[0]
+      let val = param.split('=')[1]
       val = decodeURIComponent(val)
       val = (/^\d+$/.test(val) ? parseFloat(val) : val) as string
 
@@ -73,7 +71,7 @@ export function parseParam(url: string) {
  * @param {*} property 比对的参数
  * @param {number} mode 升序 1 or 降序 -1
  * @return {Function}
- * eg:
+ * @example
  *  const res = [{name: 'a', age: 20},{name: 'b', age: 10}]
  *  res.sort(compare('age')) => [{name: 'b', age: 10},{name: 'a', age: 20}]
  */

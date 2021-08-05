@@ -3,14 +3,6 @@
     <h3 class="drawer-title">Page style setting</h3>
 
     <div class="drawer-item">
-      <span>Theme Color</span>
-      <!-- <theme-picker
-        style="float: right; height: 26px; margin: -3px 8px 0 0"
-        @change="themeChange"
-      /> -->
-    </div>
-
-    <div class="drawer-item">
       <span>Open Tags-View</span>
       <el-switch v-model="tagsView" class="drawer-switch" />
     </div>
@@ -24,7 +16,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { useStore } from '@/store/'
+import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'Settings',
@@ -50,6 +42,7 @@ export default defineComponent({
         })
       },
     })
+
     return {
       fixedHeader,
       tagsView,
@@ -57,12 +50,6 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped lang="scss">
-.settings {
-  color: #1643a5;
-}
-</style>
 
 <style lang="scss" scoped>
 .drawer-container {
@@ -82,10 +69,6 @@ export default defineComponent({
     padding: 12px 0;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.65);
-  }
-
-  .drawer-switch {
-    float: right;
   }
 }
 </style>

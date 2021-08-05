@@ -260,6 +260,7 @@ export default defineComponent({
 .tags-view-container {
   width: 100%;
   height: 34px;
+  background: #fff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
 
   .tags-view-item {

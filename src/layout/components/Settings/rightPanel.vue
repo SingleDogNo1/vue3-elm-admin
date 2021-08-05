@@ -1,6 +1,6 @@
 <template>
   <div ref="settingPanelRef" :class="{ show: show }" class="setting-panel-container">
-    <div class="setting-panel-background"></div>
+    <div class="setting-panel-background" @click="closeSettingsPanel"></div>
     <div class="setting-panel">
       <div
         class="handle-button"
@@ -68,6 +68,10 @@ export default defineComponent({
       body.insertBefore(settingPanelRef.value, body.firstChild)
     }
 
+    function closeSettingsPanel() {
+      state.show = false
+    }
+
     watch(
       () => state.show,
       (value) => {
@@ -97,6 +101,7 @@ export default defineComponent({
       theme,
       addEventClick,
       insertToBody,
+      closeSettingsPanel,
     }
   },
 })
