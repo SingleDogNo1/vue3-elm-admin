@@ -1,6 +1,13 @@
 import { GlobEnvConfig } from '#/config'
 
-export const useGlobSetting = (): any => {
+interface Glob {
+  title: string
+  apiUrl: string
+  urlPrefix: string | undefined
+  uploadUrl: string | undefined
+}
+
+export const useGlobSetting = (): Glob => {
   const ENV = import.meta.env as unknown as GlobEnvConfig
 
   const glob = {
