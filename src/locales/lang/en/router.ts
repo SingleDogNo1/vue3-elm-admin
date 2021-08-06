@@ -4,4 +4,5 @@ export default {
   nestedPageA: 'Nested Page A',
   nestedPageB: 'Nested Page B',
   icon: 'Icons',
+  guide: 'Guide',
 }

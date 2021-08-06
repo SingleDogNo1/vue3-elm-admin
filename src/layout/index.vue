@@ -3,7 +3,7 @@
   <div :class="['main-container', { 'fixed-container': fixedHeader }]">
     <div :class="{ 'fixed-header': fixedHeader }">
       <navbar />
-      <tags-view v-if="needTagsView" />
+      <tags-view v-if="needTagsView" id="tags-view-container" />
     </div>
     <app-main :class="{ 'fixed-content': fixedHeader, 'has-tags': needTagsView }" />
     <right-panel v-if="showSettings">

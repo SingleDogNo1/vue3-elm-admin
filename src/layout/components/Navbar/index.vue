@@ -1,13 +1,18 @@
 <template>
   <div class="navbar h-12 overflow-hidden">
-    <hamburger :is-active="sidebar.opened" class="leading-12 hover-effect" @click="toggleSideBar" />
+    <hamburger
+      :is-active="sidebar.opened"
+      id="hamburger-container"
+      class="leading-12 hover-effect"
+      @click="toggleSideBar"
+    />
 
-    <breadcrumb />
+    <breadcrumb id="breadcrumb-container" />
 
     <div class="h-full flex">
-      <screen-full class="h-full px-2 leading-12 hover-effect" />
+      <screen-full id="screenfull" class="h-full px-2 leading-12 hover-effect" />
 
-      <lang-select class="h-full leading-12 text-base hover-effect" />
+      <lang-select id="lang-select" class="h-full leading-12 text-base hover-effect" />
       <account />
     </div>
   </div>

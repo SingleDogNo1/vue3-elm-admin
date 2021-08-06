@@ -51,6 +51,23 @@ export const constantRoutes: RouteRecordRaw[] = [
       hidden: true,
     },
   },
+  {
+    path: '/guide',
+    component: Layout,
+    redirect: '/guide/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Guide/index.vue'),
+        name: 'Guide',
+        meta: {
+          title: 'router.guide',
+          icon: 'guide',
+          noCache: true,
+        },
+      },
+    ],
+  },
 ]
 
 export const asyncRoutes: RouteRecordRaw[] = [

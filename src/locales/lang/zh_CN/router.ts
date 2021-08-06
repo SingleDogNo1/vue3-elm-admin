@@ -4,4 +4,5 @@ export default {
   nestedPageA: '折叠内容A',
   nestedPageB: '折叠内容B',
   icon: '图标',
+  guide: '指引',
 }

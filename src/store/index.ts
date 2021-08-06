@@ -1,7 +1,7 @@
 import { InjectionKey, App } from 'vue'
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
 import { AllState } from './types'
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 import getters from './getters'
 import user from './modules/user'
 import locale from './modules/locale'
@@ -12,9 +12,9 @@ import settings from './modules/settings'
 
 export const store = createStore<AllState>({
   plugins: [
-    createPersistedState({
-      storage: window.sessionStorage,
-    }),
+    // createPersistedState({
+    //   storage: window.sessionStorage,
+    // }),
   ],
   getters,
   modules: {

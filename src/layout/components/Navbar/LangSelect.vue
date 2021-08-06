@@ -38,7 +38,6 @@ export default defineComponent({
       ],
     })
     function handleChangeLang(value) {
-      console.log('value :>> ', value)
       changeLocale(value)
     }
 
