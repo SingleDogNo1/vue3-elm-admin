@@ -45,7 +45,7 @@ import {
   nextTick,
   getCurrentInstance,
 } from 'vue'
-import ScrollPane from './scroll-pane.vue'
+import ScrollPane from './scrollPanel.vue'
 import path from 'path-browserify'
 import { useStore } from '@/store'
 import { useRoute, useRouter } from '@/router'

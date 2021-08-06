@@ -1,10 +1,15 @@
-import { UserConfigExport, ConfigEnv } from 'vite'
+import { UserConfigExport, ConfigEnv, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { viteMockServe } from 'vite-plugin-mock'
 import viteSvgIcons from 'vite-plugin-svg-icons'
+import html from 'vite-plugin-html'
 
-export default ({ command }: ConfigEnv): UserConfigExport => {
+export default ({ command, mode }: ConfigEnv): UserConfigExport => {
+  const root = process.cwd()
+  const env = loadEnv(mode, root)
+
+  console.log('env :>> ', env)
   return {
     plugins: [
       vue(),
@@ -16,6 +21,14 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       viteSvgIcons({
         iconDirs: [resolve(process.cwd(), 'src/icons/svgs')],
         symbolId: 'icon-[dir]-[name]',
+      }),
+      html({
+        inject: {
+          injectData: {
+            title: env.VITE_GLOB_APP_TITLE,
+          },
+        },
+        minify: true,
       }),
     ],
     resolve: {
