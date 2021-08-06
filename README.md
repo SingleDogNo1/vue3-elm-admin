@@ -1,4 +1,6 @@
-# Git 提交规范
+# Vue3-elm-admin
+
+## Git 提交规范
 
 |   code   |                             desc                              |
 | :------: | :-----------------------------------------------------------: |
@@ -12,3 +14,9 @@
 |  chore   |                    更改脚手架配置相关文件                     |
 |  revert  |                           版本回退                            |
 |    ui    |           只更新 css 样式，不涉及任何业务功能的修改           |
+
+## Question
+
+### Composition API 下怎么使用在 js 文件中使用 $router/$i18n/$ELEMENT 实例？
+
+参考`src/locales/index.ts` 挂载 $i18n 实例，`src/main.ts`使用 $i18n 实例, 目前使用方式为挂载在 app 实例上获取，有没有更优的办法？

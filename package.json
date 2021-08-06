@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
     "serve": "vite preview --port 4000",
     "lint:eslint": "eslint \"{src,mock}/**/*.{vue,ts,tsx,js,jsx}\" --fix",
     "lint:stylelint": "stylelint \"**/*.{vue,postcss,css,scss}\" --fix",

@@ -6,7 +6,6 @@ import { setHtmlPageLang } from './helper'
 import { LocaleSetting, LocaleType } from '#/locale'
 import { store } from '@/store'
 import { computed, unref } from 'vue'
-import ElementPlus from 'element-plus'
 
 const localeSetting: LocaleSetting = {
   locale: 'zh_CN',
@@ -50,9 +49,7 @@ async function createI18nOptions(): Promise<I18nOptions> {
 export async function setupI18n(app: App) {
   const options = await createI18nOptions()
   i18n = createI18n(options) as I18n
-  app.use(ElementPlus, {
-    i18n: i18n.global.t,
-  })
+  app.config.globalProperties.$i18n = i18n
   app.use(i18n)
 }
 

@@ -24,8 +24,8 @@ async function bootstrap() {
   await setupRouter(app)
   // 注册全局 svg-icon 组件
   await setupIconComponent(app)
-  //权限
-  const t = (app as any).__VUE_I18N__.global.t
+  // 注册权限
+  const { t } = await app.config.globalProperties.$i18n.global
   await setupPermission(router, t)
   // 所有组件注册完成
   await router.isReady()
