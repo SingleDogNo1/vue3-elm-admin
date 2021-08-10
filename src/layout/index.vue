@@ -47,6 +47,8 @@ export default defineComponent({
 .main-container {
   flex: 1;
   position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden auto;
 
   &.fixed-container {

@@ -64,7 +64,7 @@ export default defineComponent({
   position: relative;
   display: flex;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid $--border-color-default;
   align-items: center;
   justify-content: space-between;
 

@@ -261,7 +261,7 @@ export default defineComponent({
   width: 100%;
   height: 34px;
   background: #fff;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid $--border-color-default;
 
   .tags-view-item {
     position: relative;

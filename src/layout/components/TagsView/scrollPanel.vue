@@ -33,7 +33,6 @@ export default defineComponent({
     })
     const scrollContainer = ref()
 
-    console.log('scrollContainer :>> ', scrollContainer.value)
     const scrollWrapper = computed(() => scrollContainer.value.wrap)
 
     function handleScroll(e) {
