@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
+import SvgIcon from './index.vue'
 
 export function setupIconComponent(app: App<Element>) {
   app.component('SvgIcon', SvgIcon)

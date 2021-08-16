@@ -19,7 +19,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         prodEnabled: false,
       }),
       viteSvgIcons({
-        iconDirs: [resolve(process.cwd(), 'src/icons/svgs')],
+        iconDirs: [resolve(process.cwd(), 'src/components/SvgIcon/svg')],
         symbolId: 'icon-[dir]-[name]',
       }),
       html({

@@ -1,11 +1,6 @@
 <template>
-  <aside>
-    The guide page is useful for some people who entered the project for the first time. You can
-    briefly introduce the features of the project. Demo is based on
-    <a href="https://github.com/kamranahmedse/driver.js" target="_blank">driver.js.</a>
-  </aside>
-  <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
-    Show Guide
+  <el-button class="m-8" icon="el-icon-question" type="primary" @click.prevent.stop="guide">
+    {{ t('guide.title') }}
   </el-button>
 </template>
 
@@ -44,7 +39,12 @@ export default defineComponent({
 
     function generateDriver() {
       state.driver = null
-      state.driver = new DRIVER()
+      state.driver = new DRIVER({
+        doneBtnText: t('guide.done'),
+        closeBtnText: t('guide.close'),
+        nextBtnText: t('guide.next'),
+        prevBtnText: t('guide.prev'),
+      })
     }
 
     watch($i18n.global.locale, () => {

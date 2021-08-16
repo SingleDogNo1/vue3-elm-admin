@@ -8,7 +8,7 @@ import { router, setupRouter } from './router'
 import { setupStore } from './store'
 import { setupGlobPlugins } from './plugins'
 import { setupI18n } from './locales'
-import { setupIconComponent } from './icons'
+import { setupIconComponent } from '@/components/SvgIcon'
 import { setupPermission } from './permission'
 
 const app = createApp(App)
