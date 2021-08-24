@@ -9,7 +9,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
 
-  console.log('env :>> ', env)
   return {
     plugins: [
       vue(),

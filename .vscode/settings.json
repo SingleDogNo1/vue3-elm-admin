@@ -6,6 +6,7 @@
     "bottomright",
     "browserify",
     "commitlint",
+    "interactjs",
     "mockjs",
     "nprogress",
     "persistedstate",
@@ -15,7 +16,14 @@
     "tailwindcss",
     "topleft",
     "topright",
-    "vitejs"
+    "vitejs",
+    "resizestart",
+    "resizemove",
+    "resizeend",
+    "dragstart",
+    "dragmove",
+    "dragend"
+
   ],
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sortKeys": true,
