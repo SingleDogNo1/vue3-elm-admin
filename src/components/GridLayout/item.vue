@@ -15,15 +15,17 @@ import {
   ref,
   inject,
   computed,
+  nextTick,
   onBeforeUnmount,
   watch,
 } from 'vue'
-import mitt from 'mitt'
+import { Emitter } from 'mitt'
 import type { Position } from './helpers/utils'
 import { setTopLeft, setTopRight, setTransformRtl, setTransform } from './helpers/utils'
 import { getControlPosition, createCoreData } from './helpers/draggableUtils'
 import { getColsFromBreakpoint } from './helpers/responsiveUtils'
 import { getDocumentDir } from './helpers/DOM'
+import MittEvents from './MittEvents'
 import interact from 'interactjs'
 
 export default defineComponent({
@@ -31,7 +33,7 @@ export default defineComponent({
   props: {
     isDraggable: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     isResizable: {
       type: Boolean,
@@ -114,7 +116,7 @@ export default defineComponent({
     const preserveAspectRatio = toRef(props, 'preserveAspectRatio')
 
     const layout: { [key: string]: any } = inject('layout')!
-    const emitter = mitt()
+    const emitter: Emitter<MittEvents> = inject('emitter')!
     const gridItemRef = ref()
 
     const state = reactive({
@@ -128,7 +130,6 @@ export default defineComponent({
       resizable: null as any,
       useCssTransforms: true,
       useStyleCursor: true,
-
       isDragging: false,
       isResizing: false,
       dragging: null as null | { top: number; left: number },
@@ -139,10 +140,8 @@ export default defineComponent({
       lastH: NaN,
       style: {},
       rtl: false,
-
       dragEventSet: false,
       resizeEventSet: false,
-
       previousW: null as null | number,
       previousH: null as null | number,
       previousX: null as null | number,
@@ -181,11 +180,13 @@ export default defineComponent({
 
     function calcColWidth() {
       const colWidth = (state.containerWidth - state.margin[0] * (state.cols + 1)) / state.cols
+      console.log('colWidth :>> ', state.containerWidth)
       return colWidth
     }
 
     function calcPosition(x, y, w, h) {
       const colWidth = calcColWidth()
+      console.log('colWidth :>> ', colWidth)
       let pos: Position
       if (renderRtl.value) {
         pos = {
@@ -221,6 +222,13 @@ export default defineComponent({
         state.innerX = x.value
         state.innerW = w.value
       }
+      console.log(
+        'state.innerX, state.innerY, state.innerW, state.innerH :>> ',
+        state.innerX,
+        state.innerY,
+        state.innerW,
+        state.innerH
+      )
       let pos = calcPosition(state.innerX, state.innerY, state.innerW, state.innerH)
 
       if (state.isDragging) {
@@ -544,61 +552,6 @@ export default defineComponent({
       }
     }
 
-    function autoSize() {
-      state.previousW = state.innerW
-      state.previousH = state.innerH
-
-      // let newSize = (slots.default?[0] as unknown as any).elm.getBoundingClientRect()
-      // let pos = calcWH(newSize.height, newSize.width, true)
-
-      // if (pos.w < minW.value) {
-      //   pos.w = minW.value
-      // }
-      // if (pos.w > maxW.value) {
-      //   pos.w = maxW.value
-      // }
-      // if (pos.h < minH.value) {
-      //   pos.h = minH.value
-      // }
-      // if (pos.h > maxH.value) {
-      //   pos.h = maxH.value
-      // }
-
-      // if (pos.h < 1) {
-      //   pos.h = 1
-      // }
-      // if (pos.w < 1) {
-      //   pos.w = 1
-      // }
-
-      // if (state.innerW !== pos.w || state.innerH !== pos.h) {
-      //   emit('resize', i.value, pos.h, pos.w, newSize.height, newSize.width)
-      // }
-      // if (state.previousW !== pos.w || state.previousH !== pos.h) {
-      //   emit('resized', i.value, pos.h, pos.w, newSize.height, newSize.width)
-      //   emitter.emit(
-      //     'resizeEvent', {
-      //     i: i.value,
-      //     x: state.innerX,
-      //     y: state.innerY,
-      //     h: pos.h,
-      //     w: pos.w
-      //     }
-
-      //   )
-      //   emitter.emit(
-      //     'resizeend',
-      //   {
-      //     i: i.value,
-      //     x: state.innerX,
-      //     y: state.innerY,
-      //     h: pos.h,
-      //     w: pos.w
-      //     }
-      //   )
-      // }
-    }
-
     function updateWidthHandler(width) {
       updateWidth(width)
     }
@@ -607,15 +560,15 @@ export default defineComponent({
       compact()
     }
 
-    function setDraggableHandler(isDraggable) {
-      if (isDraggable.value === null) {
-        state.draggable = isDraggable
+    function setDraggableHandler(val) {
+      if (isDraggable.value === false) {
+        state.draggable = val
       }
     }
 
-    function setResizableHandler(isResizable) {
-      if (isResizable.value === null) {
-        state.resizable = isResizable
+    function setResizableHandler(val) {
+      if (isResizable.value === false) {
+        state.resizable = val
       }
     }
 
@@ -627,25 +580,11 @@ export default defineComponent({
       state.maxRows = maxRows
     }
 
-    function directionChangeHandler() {
-      state.rtl = getDocumentDir() === 'rtl'
-      compact()
-    }
-
     function setColNum(colNum) {
       state.cols = parseInt(colNum)
     }
 
     state.rtl = getDocumentDir() === 'rtl'
-
-    emitter.on('updateWidth', updateWidthHandler)
-    emitter.on('compact', compactHandler)
-    emitter.on('setDraggable', setDraggableHandler)
-    emitter.on('setResizable', setResizableHandler)
-    emitter.on('setRowHeight', setRowHeightHandler)
-    emitter.on('setMaxRows', setMaxRowsHandler)
-    emitter.on('directionChange', directionChangeHandler)
-    emitter.on('setColNum', setColNum)
 
     watch(
       () => isDraggable.value,
@@ -739,9 +678,15 @@ export default defineComponent({
         createStyle()
       }
     )
-    watch([minH.value, maxH.value, minW.value, maxW.value], () => {
-      tryMakeResizable
-    })
+    // watch([minH.value, maxH.value, minW.value, maxW.value], () => {
+    //   tryMakeResizable
+    // })
+    watch(
+      () => minH.value,
+      () => {
+        tryMakeResizable
+      }
+    )
 
     watch(
       () => renderRtl.value,
@@ -763,29 +708,53 @@ export default defineComponent({
     )
 
     onMounted(() => {
-      if (layout.responsive && layout.lastBreakpoint) {
-        state.cols = getColsFromBreakpoint(layout.lastBreakpoint, layout.cols)
-      } else {
-        state.cols = layout.colNum
-      }
-      state.rowHeight = layout.rowHeight
-      state.containerWidth = layout.width ?? 100
-      state.margin = layout.margin ?? [10, 10]
-      state.maxRows = layout.maxRows
+      nextTick(() => {
+        if (layout.responsive && layout.lastBreakpoint) {
+          state.cols = getColsFromBreakpoint(layout.lastBreakpoint, layout.cols)
+        } else {
+          state.cols = layout.colNum
+        }
+        state.rowHeight = layout.rowHeight
+        state.containerWidth = layout.width ?? 100
+        state.margin = layout.margin ?? [10, 10]
+        state.maxRows = layout.maxRows
 
-      if (isDraggable.value === null) {
-        state.draggable = layout.isDraggable
-      } else {
-        state.draggable = isDraggable.value
-      }
-      if (isResizable.value === null) {
-        state.resizable = layout.isResizable
-      } else {
-        state.resizable = isResizable.value
-      }
-      state.useCssTransforms = layout.useCssTransforms
-      state.useStyleCursor = layout.useStyleCursor
-      createStyle()
+        if (isDraggable.value === null) {
+          state.draggable = layout.isDraggable
+        } else {
+          state.draggable = isDraggable.value
+        }
+        if (isResizable.value === null) {
+          state.resizable = layout.isResizable
+        } else {
+          state.resizable = isResizable.value
+        }
+        state.useCssTransforms = layout.useCssTransforms
+        state.useStyleCursor = layout.useStyleCursor
+        createStyle()
+
+        emitter.on('updateWidth', ({ width }) => {
+          updateWidthHandler(width)
+        })
+        emitter.on('compact', () => {
+          compactHandler()
+        })
+        emitter.on('setDraggable', (val) => {
+          setDraggableHandler(val)
+        })
+        emitter.on('setResizable', (val) => {
+          setResizableHandler(val)
+        })
+        emitter.on('setRowHeight', (val) => {
+          setRowHeightHandler(val)
+        })
+        emitter.on('setMaxRows', (val) => {
+          setMaxRowsHandler(val)
+        })
+        emitter.on('setColNum', (val) => {
+          setColNum(val)
+        })
+      })
     })
 
     onBeforeUnmount(() => {
@@ -795,7 +764,6 @@ export default defineComponent({
       emitter.off('setResizable', setResizableHandler)
       emitter.off('setRowHeight', setRowHeightHandler)
       emitter.off('setMaxRows', setMaxRowsHandler)
-      emitter.off('directionChange', directionChangeHandler)
       emitter.off('setColNum', setColNum)
       if (state.interactObj) {
         state.interactObj.unset()
@@ -823,14 +791,12 @@ export default defineComponent({
       compact,
       tryMakeDraggable,
       tryMakeResizable,
-      autoSize,
       updateWidthHandler,
       compactHandler,
       setDraggableHandler,
       setResizableHandler,
       setRowHeightHandler,
       setMaxRowsHandler,
-      directionChangeHandler,
       setColNum,
     }
   },

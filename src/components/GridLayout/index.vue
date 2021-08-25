@@ -27,11 +27,12 @@ import {
   watch,
 } from 'vue'
 import GridItem from './item.vue'
-import mitt from 'mitt'
+import mitt, { Emitter } from 'mitt'
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 import type { Breakpoints } from './helpers/responsiveUtils'
 import type { Layout, LayoutItem } from './helpers/utils'
+import type MittEvents from './MittEvents'
 
 import {
   bottom,
@@ -42,13 +43,11 @@ import {
   cloneLayout,
   getAllCollisions,
 } from './helpers/utils'
-
 import {
   getBreakpointFromWidth,
   getColsFromBreakpoint,
   findOrGenerateResponsiveLayout,
 } from './helpers/responsiveUtils'
-
 import { addWindowEventListener, removeWindowEventListener } from './helpers/DOM'
 
 interface State {
@@ -170,8 +169,10 @@ export default defineComponent({
     const isResizable = toRef(props, 'isResizable')
     const maxRows = toRef(props, 'maxRows')
     const isMirrored = toRef(props, 'isMirrored')
+    const useCssTransforms = toRef(props, 'useCssTransforms')
+    const useStyleCursor = toRef(props, 'useStyleCursor')
 
-    const emitter = mitt()
+    const emitter: Emitter<MittEvents> = mitt<MittEvents>()
     const LayoutRef = ref()
 
     const state = reactive<State>({
@@ -196,9 +197,18 @@ export default defineComponent({
 
     provide('layout', {
       isResizable: isResizable.value,
+      isDraggable: isDraggable.value,
       isMirrored: isMirrored.value,
+      responsive: responsive.value,
+      cols: cols.value,
+      colNum: colNum.value,
+      maxRows: maxRows.value,
+      rowHeight: rowHeight.value,
+      useCssTransforms: useCssTransforms.value,
+      useStyleCursor: useStyleCursor.value,
       ...state,
     })
+    provide('emitter', emitter)
 
     // find difference in layouts
     function findDifference(layout: Layout, originalLayout: Layout): Layout {
@@ -209,7 +219,7 @@ export default defineComponent({
       let uniqueResultTwo = originalLayout.filter((obj) => !layout.some((obj2) => obj.i === obj2.i))
 
       //Combine the two arrays of unique entries#
-      return uniqueResultOne.concat(uniqueResultTwo)
+      return [...uniqueResultOne, ...uniqueResultTwo]
     }
 
     // clear all responsive layouts
@@ -261,7 +271,7 @@ export default defineComponent({
       if (LayoutRef.value) {
         state.width = LayoutRef.value.offsetWidth
       }
-      emitter.emit('resizeEvent')
+      emitter.emit('resizeEvent', {})
     }
 
     function dragEvent(eventName, i, x, y, h, w) {
@@ -396,12 +406,12 @@ export default defineComponent({
       dragEvent(eventType, i, x, y, h, w)
     }
 
-    emitter.on('resizeEvent', () => {
-      resizeEventHandler
+    emitter.on('resizeEvent', ({ eventType, i, x, y, h, w }) => {
+      resizeEventHandler(eventType, i, x, y, h, w)
     })
 
-    emitter.on('dragEvent', () => {
-      dragEventHandler
+    emitter.on('dragEvent', ({ eventType, i, x, y, h, w }) => {
+      dragEventHandler(eventType, i, x, y, h, w)
     })
 
     emit('layout-created', layout.value)
@@ -410,7 +420,7 @@ export default defineComponent({
       () => state.width,
       (newVal, oldVal) => {
         nextTick(() => {
-          emitter.emit('updateWidth', newVal)
+          emitter.emit('updateWidth', { width: newVal })
           if (oldVal === null) {
             nextTick(() => {
               emit('layout-ready', layout.value)

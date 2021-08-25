@@ -70,7 +70,9 @@
           @container-resized="containerResized"
           @moved="moved"
         >
-          <span>{{ item.i }}</span>
+          <div class="asasd">
+            <span>{{ item.i }}</span>
+          </div>
         </grid-item>
       </grid-layout>
     </div>
@@ -287,3 +289,112 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+/*** EXAMPLE ***/
+#content {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.grid-layout {
+  background: #eee;
+}
+
+.layoutJSON {
+  padding: 10px;
+  margin-top: 10px;
+  background: #ddd;
+  border: 1px solid black;
+}
+
+.eventsJSON {
+  height: 100px;
+  padding: 10px;
+  margin-top: 10px;
+  overflow-y: scroll;
+  background: #ddd;
+  border: 1px solid black;
+}
+
+.columns {
+  -moz-columns: 120px;
+  -webkit-columns: 120px;
+  columns: 120px;
+}
+
+.resizable-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 5000;
+  width: 20px;
+  height: 20px;
+  padding: 0 3px 3px 0;
+  cursor: se-resize;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+}
+
+.grid-item:not(.grid-placeholder) {
+  background: #ccc;
+  border: 1px solid black;
+}
+
+.grid-item.resizing {
+  opacity: 0.9;
+}
+
+.grid-item.static {
+  background: #cce;
+}
+
+.grid-item .text {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  font-size: 24px;
+  text-align: center;
+}
+
+.grid-item .no-drag {
+  width: 100%;
+  height: 100%;
+}
+
+.grid-item .minMax {
+  font-size: 12px;
+}
+
+.grid-item .add {
+  cursor: pointer;
+}
+
+.vue-draggable-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0 8px 8px 0;
+  cursor: pointer;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='5' fill='#999999'/></svg>")
+    no-repeat;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+}
+
+#content .grid-item.grid-placeholder {
+  background-color: green;
+}
+</style>
