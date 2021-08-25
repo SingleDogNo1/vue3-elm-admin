@@ -33,11 +33,11 @@ export default defineComponent({
   props: {
     isDraggable: {
       type: Boolean,
-      default: true,
+      default: null,
     },
     isResizable: {
       type: Boolean,
-      default: false,
+      default: null,
     },
     static: {
       type: Boolean,
@@ -561,13 +561,13 @@ export default defineComponent({
     }
 
     function setDraggableHandler(val) {
-      if (isDraggable.value === false) {
+      if (isDraggable.value === null) {
         state.draggable = val
       }
     }
 
     function setResizableHandler(val) {
-      if (isResizable.value === false) {
+      if (isResizable.value === null) {
         state.resizable = val
       }
     }
