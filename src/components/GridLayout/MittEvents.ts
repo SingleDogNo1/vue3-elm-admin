@@ -1,4 +1,4 @@
-type TargetMove = {
+export type TargetMove = {
   eventType: string
   i: number | string
   x: number
@@ -7,8 +7,8 @@ type TargetMove = {
   w: number
 }
 
-type MittEvents = {
-  resizeEvent: TargetMove
+export type MittEvents = {
+  resizeEvent: TargetMove | void
   dragEvent: TargetMove
   updateWidth: {
     width: number
@@ -20,4 +20,3 @@ type MittEvents = {
   setResizable: boolean
   setMaxRows: number
 }
-export default MittEvents

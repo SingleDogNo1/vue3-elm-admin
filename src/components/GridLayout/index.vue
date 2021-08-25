@@ -32,7 +32,7 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 
 import type { Breakpoints } from './helpers/responsiveUtils'
 import type { Layout, LayoutItem } from './helpers/utils'
-import type MittEvents from './MittEvents'
+import type { MittEvents, TargetMove } from './MittEvents'
 
 import {
   bottom,
@@ -271,7 +271,7 @@ export default defineComponent({
       if (LayoutRef.value) {
         state.width = LayoutRef.value.offsetWidth
       }
-      emitter.emit('resizeEvent', {})
+      emitter.emit('resizeEvent')
     }
 
     function dragEvent(eventName, i, x, y, h, w) {
@@ -406,7 +406,7 @@ export default defineComponent({
       dragEvent(eventType, i, x, y, h, w)
     }
 
-    emitter.on('resizeEvent', ({ eventType, i, x, y, h, w }) => {
+    emitter.on('resizeEvent', ({ eventType, i, x, y, h, w }: TargetMove) => {
       resizeEventHandler(eventType, i, x, y, h, w)
     })
 

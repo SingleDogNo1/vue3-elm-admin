@@ -25,7 +25,7 @@ import { setTopLeft, setTopRight, setTransformRtl, setTransform } from './helper
 import { getControlPosition, createCoreData } from './helpers/draggableUtils'
 import { getColsFromBreakpoint } from './helpers/responsiveUtils'
 import { getDocumentDir } from './helpers/DOM'
-import MittEvents from './MittEvents'
+import { MittEvents } from './MittEvents'
 import interact from 'interactjs'
 
 export default defineComponent({
